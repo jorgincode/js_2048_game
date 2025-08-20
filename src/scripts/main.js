@@ -43,7 +43,7 @@ function render() {
     msgWin.classList.remove('hidden');
   }
 
-  if (game.getStatus() === 'lose') {
+  if (game.getStatus() === 'gameover') {
     msgLose.classList.remove('hidden');
   }
 }
@@ -62,26 +62,30 @@ startBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (game.getStatus() !== 'playing') {
+  /* if (game.getStatus() !== 'playing') {
     return;
-  }
+  } */
+  let moved = false;
 
   switch (e.key) {
     case 'ArrowLeft':
-      game.moveLeft();
+      moved = game.moveLeft();
       break;
     case 'ArrowRight':
-      game.moveRight();
+      moved = game.moveRight();
       break;
     case 'ArrowUp':
-      game.moveUp();
+      moved = game.moveUp();
       break;
     case 'ArrowDown':
-      game.moveDown();
+      moved = game.moveDown();
       break;
   }
 
-  render();
+  if (moved) {
+    e.preventDefault();
+    render();
+  }
 });
 
 render();

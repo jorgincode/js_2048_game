@@ -48,12 +48,12 @@ export default class Game {
   /**
    * Returns the current game status.
    *
-   * @returns {string} One of: 'idle', 'playing', 'win', 'lose'
+   * @returns {string} One of: 'idle', 'playing', 'win', 'gameover'
    *
    * `idle` - the game has not started yet (the initial state);
    * `playing` - the game is in progress;
    * `win` - the game is won;
-   * `lose` - the game is lost
+   * `gameover` - the game is lost
    */
   getStatus() {
     return this.status;
@@ -74,9 +74,6 @@ export default class Game {
    * Resets the game.
    */
   restart() {
-    /* this.board = Array.from({ length: this.size }, () =>
-      Array(this.size).fill(0)); */
-
     this.board = [];
 
     for (let i = 0; i < this.size; i++) {
@@ -89,16 +86,6 @@ export default class Game {
     this.addRandomTile();
     this.addRandomTile();
   }
-
-  /* restart() {
-    this.board = [];
-
-    for (let i = 0; i < this.size; i++) {
-      const row = new Array(this.size).fill(0);
-
-      this.board.push(row);
-    }
-  } */
 
   // Add your own methods here
   addRandomTile() {
@@ -124,15 +111,31 @@ export default class Game {
   }
 
   moveLeft() {
+    if (this.getStatus() !== 'playing') {
+      return false;
+    }
+
     return this.move((row) => row);
   }
   moveRight() {
+    if (this.getStatus() !== 'playing') {
+      return false;
+    }
+
     return this.move((row) => row.slice().reverse(), true);
   }
   moveUp() {
+    if (this.getStatus() !== 'playing') {
+      return false;
+    }
+
     return this.moveColumn((col) => col);
   }
   moveDown() {
+    if (this.getStatus() !== 'playing') {
+      return false;
+    }
+
     return this.moveColumn((col) => col.slice().reverse(), true);
   }
 
@@ -173,6 +176,8 @@ export default class Game {
       this.addRandomTile();
       this.checkGameOver();
     }
+
+    return moved;
   }
 
   moveColumn(mapFn, reverse = false) {
@@ -218,6 +223,8 @@ export default class Game {
       this.addRandomTile();
       this.checkGameOver();
     }
+
+    return moved;
   }
 
   checkGameOver() {
@@ -244,6 +251,6 @@ export default class Game {
       }
     }
 
-    this.status = 'lose';
+    this.status = 'gameover';
   }
 }
