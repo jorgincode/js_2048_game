@@ -175,41 +175,6 @@ export default class Game {
     }
   }
 
-  /* move(mapFn, reverse = false) {
-    let moved = false;
-
-    this.board = this.board.map((row) => {
-      const newRow = mapFn(row).filter((x) => x !== 0);
-
-      for (let i = 0; i < newRow.length - 1; i++) {
-        if (newRow[i] === newRow[i + 1]) {
-          newRow[i] *= 2;
-          this.score += newRow[i];
-          newRow[i + 1] = 0;
-        }
-      }
-
-      const compacted = newRow.filter((x) => x !== 0);
-
-      while (compacted.length < this.size) {
-        compacted.push(0);
-      }
-
-      const result = reverse ? compacted.reverse() : compacted;
-
-      if (result.toString() !== row.toString()) {
-        moved = true;
-      }
-
-      return result;
-    });
-
-    if (moved) {
-      this.addRandomTile();
-      this.checkGameOver();
-    }
-  } */
-
   moveColumn(mapFn, reverse = false) {
     let moved = false;
 
@@ -255,44 +220,6 @@ export default class Game {
     }
   }
 
-  /* moveColumn(mapFn, reverse = false) {
-    let moved = false;
-
-    for (let c = 0; c < this.size; c++) {
-      const col = this.board.map((row) => row[c]);
-      const newCol = mapFn(col).filter((x) => x !== 0);
-
-      for (let i = 0; i < newCol.length - 1; i++) {
-        if (newCol[i] === newCol[i + 1]) {
-          newCol[i] *= 2;
-          this.score += newCol[i];
-          newCol[i + 1] = 0;
-        }
-      }
-
-      const compacted = newCol.filter((x) => x !== 0);
-
-      while (compacted.length < this.size) {
-        compacted.push(0);
-      }
-
-      const result = reverse ? compacted.reverse() : compacted;
-
-      if (result.toString() !== col.toString()) {
-        moved = true;
-      }
-
-      for (let r = 0; r < this.size; r++) {
-        this.board[r][c] = result[r];
-      }
-    }
-
-    if (moved) {
-      this.addRandomTile();
-      this.checkGameOver();
-    }
-  } */
-
   checkGameOver() {
     if (this.board.flat().includes(2048)) {
       this.status = 'win';
@@ -320,5 +247,3 @@ export default class Game {
     this.status = 'lose';
   }
 }
-
-module.exports = Game;
